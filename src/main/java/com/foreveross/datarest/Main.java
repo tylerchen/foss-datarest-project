@@ -33,8 +33,8 @@ import org.iff.infra.util.StringHelper;
 import com.foreveross.datarest.core.DataSourceFactory;
 import com.foreveross.datarest.core.model.DataSourceModel;
 import com.foreveross.datarest.core.service.InitTableFactory;
-import com.foreveross.netty.server.HTTPServer;
-import com.foreveross.netty.server.RestHandler;
+import com.foreveross.netty.server.HttpServer;
+import com.foreveross.netty.server.handlers.RestHandler;
 
 /**
  * <pre>
@@ -74,7 +74,7 @@ public class Main {
 				initSystemTable(props);
 			}
 			List<RestHandler> list = initRestHandlers(props);
-			Thread server = new Thread(new HTTPServer(props, props.getProperty("server.ip"),
+			Thread server = new Thread(new HttpServer(props, props.getProperty("server.ip"),
 					NumberUtils.toInt(props.getProperty("server.port")), list, "/"));
 			server.start();
 			server.join();
@@ -83,6 +83,14 @@ public class Main {
 		}
 	}
 
+	/**
+	 * init handlers.
+	 * server.restHandlers MUST be set.
+	 * @param prop
+	 * @return
+	 * @author <a href="mailto:iffiff1@gmail.com">Tyler Chen</a> 
+	 * @since Jan 23, 2017
+	 */
 	private static List<RestHandler> initRestHandlers(Properties prop) {
 		List<RestHandler> list = new ArrayList<RestHandler>();
 		{
@@ -100,6 +108,13 @@ public class Main {
 		return list;
 	}
 
+	/**
+	 * load properties config.
+	 * Configuration Home: server.path.conf, default to: conf/conf.properties.
+	 * @return
+	 * @author <a href="mailto:iffiff1@gmail.com">Tyler Chen</a> 
+	 * @since Jan 23, 2017
+	 */
 	public static Properties loadConfig() {
 		String configFile = System.getProperty("server.path.conf");
 		System.out.println("read config file from server.path.conf: " + configFile);
@@ -139,6 +154,13 @@ public class Main {
 		return prop;
 	}
 
+	/**
+	 * init log4j.
+	 * Log4j Home: server.path.log4j, default to: conf/log4j.xml.
+	 * @param prop
+	 * @author <a href="mailto:iffiff1@gmail.com">Tyler Chen</a> 
+	 * @since Jan 23, 2017
+	 */
 	public static void initLog4j(Properties prop) {
 		String log4j = prop.getProperty("server.path.log4j");
 		System.out.println("read log4j config from server.path.log4j: " + log4j);
@@ -163,6 +185,12 @@ public class Main {
 		DOMConfigurator.configure(log4j);
 	}
 
+	/**
+	 * init data source.
+	 * @param prop
+	 * @author <a href="mailto:iffiff1@gmail.com">Tyler Chen</a> 
+	 * @since Jan 23, 2017
+	 */
 	public static void initSystemDataSource(Properties prop) {
 		Map<String, String> map = new HashMap<String, String>();
 		for (Entry<Object, Object> entry : prop.entrySet()) {
@@ -177,6 +205,12 @@ public class Main {
 		Assert.notNull(dataSource, "Can't create system datasource: " + map);
 	}
 
+	/**
+	 * create or init database.
+	 * @param prop
+	 * @author <a href="mailto:iffiff1@gmail.com">Tyler Chen</a> 
+	 * @since Jan 23, 2017
+	 */
 	public static void initSystemTable(Properties prop) {
 		String url = prop.getProperty("db.url");
 		Assert.notBlank(url);

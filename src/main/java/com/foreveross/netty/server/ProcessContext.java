@@ -51,6 +51,7 @@ import io.netty.handler.codec.http.multipart.InterfaceHttpData.HttpDataType;
 import io.netty.util.AsciiString;
 
 /**
+ * contains a request infos.
  * @author <a href="mailto:iffiff1@gmail.com">Tyler Chen</a> 
  * @since Sep 25, 2016
  */

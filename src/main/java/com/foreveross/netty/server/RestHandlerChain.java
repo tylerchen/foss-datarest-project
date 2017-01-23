@@ -14,7 +14,10 @@ import java.util.List;
 
 import org.iff.infra.util.Assert;
 
+import com.foreveross.netty.server.handlers.RestHandler;
+
 /**
+ * a handler chain to contains all the handler.
  * @author <a href="mailto:iffiff1@gmail.com">Tyler Chen</a> 
  * @since Sep 24, 2016
  */

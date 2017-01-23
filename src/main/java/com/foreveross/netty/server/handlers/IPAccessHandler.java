@@ -13,9 +13,9 @@ import org.iff.infra.util.Logger;
 import org.iff.infra.util.StringHelper;
 
 import com.foreveross.netty.server.ProcessContext;
-import com.foreveross.netty.server.RestHandler;
 
 /**
+ * ip access handler.
  * @author <a href="mailto:iffiff1@gmail.com">Tyler Chen</a> 
  * @since Nov 17, 2016
  */

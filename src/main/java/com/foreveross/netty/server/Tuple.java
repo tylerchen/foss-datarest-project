@@ -1,5 +1,17 @@
+/*******************************************************************************
+ * Copyright (c) Sep 24, 2016 @author <a href="mailto:iffiff1@gmail.com">Tyler Chen</a>.
+ * All rights reserved.
+ *
+ * Contributors:
+ *     <a href="mailto:iffiff1@gmail.com">Tyler Chen</a> - initial API and implementation
+ ******************************************************************************/
 package com.foreveross.netty.server;
 
+/**
+ * A class for carry different parameter type.
+ * @author <a href="mailto:iffiff1@gmail.com">Tyler Chen</a> 
+ * @since Sep 24, 2016
+ */
 public class Tuple<F, S> {
 
 	private F first;

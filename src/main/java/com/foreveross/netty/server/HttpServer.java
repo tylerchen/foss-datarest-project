@@ -1,9 +1,18 @@
+/*******************************************************************************
+ * Copyright (c) Sep 25, 2016 @author <a href="mailto:iffiff1@gmail.com">Tyler Chen</a>.
+ * All rights reserved.
+ *
+ * Contributors:
+ *     <a href="mailto:iffiff1@gmail.com">Tyler Chen</a> - initial API and implementation
+ ******************************************************************************/
 package com.foreveross.netty.server;
 
 import java.util.List;
 import java.util.Properties;
 
 import org.iff.infra.util.Assert;
+
+import com.foreveross.netty.server.handlers.RestHandler;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
@@ -18,7 +27,12 @@ import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.SelfSignedCertificate;
 
-public class HTTPServer implements Runnable {
+/**
+ * http server.
+ * @author <a href="mailto:iffiff1@gmail.com">Tyler Chen</a> 
+ * @since Sep 25, 2016
+ */
+public class HttpServer implements Runnable {
 
 	private SslContext sslCtx;
 	private String ip;
@@ -27,11 +41,11 @@ public class HTTPServer implements Runnable {
 	private Properties config;
 	private RestHandlerChain chain = RestHandlerChain.create();
 
-	public HTTPServer(Properties config, int port, List<RestHandler> list, String context) {
+	public HttpServer(Properties config, int port, List<RestHandler> list, String context) {
 		this(config, "0.0.0.0", port, list, context);
 	}
 
-	public HTTPServer(Properties config, String ip, int port, List<RestHandler> list, String context) {
+	public HttpServer(Properties config, String ip, int port, List<RestHandler> list, String context) {
 		Assert.notBlank(ip);
 		Assert.notEmpty(list);
 		Assert.isTrue(port > 0);

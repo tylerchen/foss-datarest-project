@@ -5,13 +5,16 @@
  * Contributors:
  *     <a href="mailto:iffiff1@gmail.com">Tyler Chen</a> - initial API and implementation
  ******************************************************************************/
-package com.foreveross.netty.server;
+package com.foreveross.netty.server.handlers;
 
 import java.nio.charset.Charset;
+
+import com.foreveross.netty.server.ProcessContext;
 
 import io.netty.handler.codec.http.HttpResponseStatus;
 
 /**
+ * if error occur.
  * @author <a href="mailto:iffiff1@gmail.com">Tyler Chen</a> 
  * @since Sep 24, 2016
  */

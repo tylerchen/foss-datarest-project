@@ -17,7 +17,7 @@ import org.iff.infra.util.Assert;
 import com.foreveross.datarest.core.service.ManagementControllerFactory;
 import com.foreveross.datarest.core.service.QueryControllerFactory;
 import com.foreveross.netty.server.ProcessContext;
-import com.foreveross.netty.server.RestHandler;
+import com.foreveross.netty.server.handlers.RestHandler;
 
 /**
  * @author <a href="mailto:iffiff1@gmail.com">Tyler Chen</a> 

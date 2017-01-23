@@ -1,3 +1,10 @@
+/*******************************************************************************
+ * Copyright (c) Sep 25, 2016 @author <a href="mailto:iffiff1@gmail.com">Tyler Chen</a>.
+ * All rights reserved.
+ *
+ * Contributors:
+ *     <a href="mailto:iffiff1@gmail.com">Tyler Chen</a> - initial API and implementation
+ ******************************************************************************/
 package com.foreveross.netty.server;
 
 import java.io.PrintWriter;
@@ -6,6 +13,10 @@ import java.util.Iterator;
 import org.apache.commons.io.output.StringBuilderWriter;
 import org.apache.commons.lang3.StringUtils;
 import org.iff.infra.util.Assert;
+
+import com.foreveross.netty.server.handlers.ErrorRestHandler;
+import com.foreveross.netty.server.handlers.NoRestHandler;
+import com.foreveross.netty.server.handlers.RestHandler;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -19,13 +30,18 @@ import io.netty.handler.codec.http.cookie.ClientCookieDecoder;
 import io.netty.handler.codec.http.cookie.Cookie;
 import io.netty.util.ReferenceCountUtil;
 
+/**
+ * http server in bound handler.
+ * @author <a href="mailto:iffiff1@gmail.com">Tyler Chen</a> 
+ * @since Sep 25, 2016
+ */
 public class HttpServerInboundHandler extends ChannelInboundHandlerAdapter {
 
-	protected HTTPServer server;
+	protected HttpServer server;
 	protected NoRestHandler noRestHandler = new NoRestHandler();
 	protected ErrorRestHandler errorRestHandler = new ErrorRestHandler();
 
-	public HttpServerInboundHandler(HTTPServer server) {
+	public HttpServerInboundHandler(HttpServer server) {
 		super();
 		Assert.notNull(server);
 		this.server = server;

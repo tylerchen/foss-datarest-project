@@ -18,7 +18,7 @@ import java.util.Map.Entry;
 import org.apache.commons.lang3.StringUtils;
 
 import com.foreveross.netty.server.ProcessContext;
-import com.foreveross.netty.server.RestHandler;
+import com.foreveross.netty.server.handlers.RestHandler;
 
 /**
  * @author <a href="mailto:iffiff1@gmail.com">Tyler Chen</a> 
