@@ -7,13 +7,15 @@
  ******************************************************************************/
 package com.foreveross.netty.server;
 
-import org.iff.infra.util.Assert;
-
+import com.foreveross.datarest.core.service.HttpRequestHandler;
+import com.foreveross.datarest.core.service.HttpStaticHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.ssl.SslContext;
+import io.netty.handler.stream.ChunkedWriteHandler;
+import org.iff.infra.util.Assert;
 
 /**
  * http server initializer.
@@ -41,6 +43,10 @@ public class HttpServerInitializer extends ChannelInitializer<SocketChannel> {
 			ch.pipeline().addLast(sslCtx.newHandler(ch.alloc()));
 		}
 		ch.pipeline().addLast(new HttpServerCodec());
+        ch.pipeline().addLast(new HttpObjectAggregator(1024*1024*64));
+        ch.pipeline().addLast(new ChunkedWriteHandler());
+		ch.pipeline().addLast(new HttpStaticHandler());
+		ch.pipeline().addLast(new HttpRequestHandler("/index"));
 		ch.pipeline().addLast(new HttpObjectAggregator(65536));
 		ch.pipeline().addLast(new HttpServerInboundHandler(server));
 	}
