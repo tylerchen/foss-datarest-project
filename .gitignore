@@ -7,3 +7,7 @@ target/
 /*.log
 /src/main/webapp/upload
 /src/main/webapp/data
+/.idea/
+/foss-datarest-project.iml
+/src/main/resources/dist/
+/src/main/resources/node_modules/
