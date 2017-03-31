@@ -118,11 +118,11 @@
                     <i-select :model.sync="whereCondition.meta" style="width: 90px">
                         <i-option value="=">=</i-option>
                         <i-option value="!=">!=</i-option>
-                        <i-option value="like">LIKE</i-option>
                         <i-option value="<="><=</i-option>
                         <i-option value="<"><</i-option>
                         <i-option value=">=">>=</i-option>
                         <i-option value=">">></i-option>
+                        <i-option value="like">LIKE</i-option>
                         <i-option value="in">IN</i-option>
                         <i-option value="not in">NOT IN</i-option>
                     </i-select>
