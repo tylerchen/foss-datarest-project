@@ -42,6 +42,8 @@ config.plugins = (config.plugins || []).concat([
         inject: false
     }),
     new webpack.ProvidePlugin({
+        axios: 'axios',
+        //e: 'echarts',
         _: 'underscore' //加载underscore
     })
 ]);

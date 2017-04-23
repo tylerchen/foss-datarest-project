@@ -83,7 +83,7 @@
                 currentPage: INIT_CURRENT_PAGE,
                 pageSize: INIT_PAGE_SIZE,
                 totalCount: 0,
-                selectedId: ""
+                selectedId: ''
             }
         },
         ready () {
