@@ -20,16 +20,14 @@
             <Submenu key="4">
                 <template slot="title">
                     <Icon type="stats-bars"></Icon>
-                    数据处理
+                    数据展示组件
                 </template>
-                <Menu-group title="使用">
-                    <Menu-item key="3-1">新增和启动</Menu-item>
-                    <Menu-item key="3-2">活跃分析</Menu-item>
-                    <Menu-item key="3-3">时段分析</Menu-item>
+                <Menu-group title="静态演示">
+                    <Menu-item key="3-1" v-link="{ path: '/list_query_view'}">列表组件演示</Menu-item>
+                    <Menu-item key="3-2" v-link="{ path: '/customize_list_query_view'}">自定义列表组件演示</Menu-item>
                 </Menu-group>
-                <Menu-group title="留存">
-                    <Menu-item key="3-4">用户留存</Menu-item>
-                    <Menu-item key="3-5">流失用户</Menu-item>
+                <Menu-group title="动态演示">
+                    <Menu-item key="3-4" v-link="{ path: '/list_data_source_and_query_statement'}">演示</Menu-item>
                 </Menu-group>
             </Submenu>
         </Menu>

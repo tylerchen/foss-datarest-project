@@ -2,12 +2,11 @@
     <br />
     <Row type="flex" justify="space-around" align="middle">
         <i-col span="22">
-            <!--<i-button type="ghost" icon="android-add" @click="openDataSourcesModal">添加</i-button>&nbsp;&nbsp;-->
             <i-button type="ghost" icon="android-add" @click="openDataSources">添加</i-button>&nbsp;&nbsp;
             <i-button type="ghost" icon="edit" @click="edit">修改</i-button>&nbsp;&nbsp;
             <i-button type="ghost" icon="information" @click="view">查看</i-button>&nbsp;&nbsp;
             <i-button type="ghost" icon="android-remove" @click="remove">删除</i-button>&nbsp;&nbsp;
-            <i-button type="ghost" icon="refresh" @click="refresh">刷新</i-button>&nbsp;&nbsp;
+
         </i-col>
     </Row>
     <br />
@@ -26,13 +25,10 @@
 
     <remove-component v-ref:removechild></remove-component>
 
-    <select-datasources-component :show-modal.sync="showDataSourcesModal"></select-datasources-component>
-
 </template>
 <script>
     import { QUERY_STATEMENT as MODULE} from '../../config/vuex.js';
     import RemoveComponent from '../../components/remove.vue'
-    import SelectDataSourcesComponent from '../dataSource/selectDataSources.vue'
 
     var EDIT_PATH = '/query_statement_edit'
     var VIEW_PATH = '/query_statement_view'
@@ -69,15 +65,11 @@
                         key: 'updateTime'
                     }
                 ],
-                rows: [
-
-                ],
+                rows: [],
                 currentPage: INIT_CURRENT_PAGE,
                 pageSize: INIT_PAGE_SIZE,
                 totalCount: 0,
-                selectedIds: [],
-                showDataSourcesModal: false,
-                showTablesModal: false
+                selectedIds: []
             }
         },
         ready () {
@@ -144,27 +136,16 @@
                     this.selectedIds.push(selection[i].id)
                 }
             },
-            openDataSourcesModal () {
-                this.showDataSourcesModal = true
-            },
             openDataSources () {
                 this.$router.go('/step_config_data_source')
-            },
-            openTablesModal () {
-                this.showTablesModal = true
             }
         },
         components: {
-            'remove-component': RemoveComponent,
-            'select-datasources-component': SelectDataSourcesComponent
+            'remove-component': RemoveComponent
         },
         events: {
             'refresh-list': function () {
                 this.initListData()
-            },
-            'returnDataSourceId': function (id) {
-                this.$refs.tableschild.$emit('setData', id, 'primaryTable')
-                this.openTablesModal()
             }
         }
     }

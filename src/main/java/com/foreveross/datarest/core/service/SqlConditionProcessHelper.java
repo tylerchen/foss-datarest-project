@@ -109,7 +109,11 @@ public class SqlConditionProcessHelper {
 						block.append(')');
 					} else {
 						block.append('?');
-						tempParamList.add(convertToType(conditionParam, cName));
+						Object condition = convertToType(conditionParam, cName);
+						if(block.toString().contains("like")) {
+							condition = "%" + condition + "%";
+						}
+						tempParamList.add(condition);
 					}
 					if (c == ']') {
 						if (block.length() > 0) {

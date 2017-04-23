@@ -54,7 +54,22 @@ const routers = {
     },
     '/step_config_query_statement': {
         component (resolve) {
-            require(['./views/queryStatement/stepConfigQueryStatement'], resolve);
+            require(['./views/queryStatement/stepConfigQueryStatement.vue'], resolve);
+        }
+    },
+    '/list_query_view': {
+        component (resolve) {
+            require(['./views/queryView/listQueryView.vue'], resolve);
+        }
+    },
+    '/customize_list_query_view': {
+        component (resolve) {
+            require(['./views/queryView/customizeListQueryView.vue'], resolve);
+        }
+    },
+    '/list_data_source_and_query_statement': {
+        component (resolve) {
+            require(['./views/queryView/listDataSourceAndQueryStatement.vue'], resolve);
         }
     }
 };

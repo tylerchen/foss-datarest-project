@@ -16,7 +16,6 @@ Vue.use(VueRouter);
 Vue.use(iView);
 Vue.use(VueResource);
 
-
 // 开启debug模式
 Vue.config.debug = true;
 

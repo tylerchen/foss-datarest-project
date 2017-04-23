@@ -22,7 +22,7 @@ module.exports = {
             { test: /\.js$/, loader: 'babel', exclude: /node_modules/ },
             { test: /\.css$/, loader: 'style!css!autoprefixer'},
             { test: /\.scss$/, loader: 'style!css!sass?sourceMap'},
-            { test: /\.(gif|jpg|png|svg|woff|eot|ttf)\??.*$/, loader: 'url-loader?limit=819800'},
+            { test: /\.(gif|jpg|png|svg|woff|eot|ttf)\??.*$/, loader: 'url-loader?limit=8198'},
             { test: /\.(html|tpl)$/, loader: 'html-loader' }
         ]
     },
