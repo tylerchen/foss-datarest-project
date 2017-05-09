@@ -39,6 +39,10 @@ module.exports = merge(webpackBaseConfig, {
             filename: '../index_prod.html',
             template: './src/template/index.ejs',
             inject: false
+        }),
+        new webpack.ProvidePlugin({
+            //e: 'echarts',
+            _: 'underscore' //加载underscore
         })
     ]
 });
