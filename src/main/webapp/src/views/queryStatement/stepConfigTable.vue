@@ -25,7 +25,7 @@
 
                 <br>
                 <Form ref="formValidate" :model="model">
-                    <Form-item v-for="(item, index) in model.tables">
+                    <Form-item v-for="(item, index) in model.tables" :key="item.index">
                         <Form-item style="float: left">
                             <Select v-model="item.type" style="width: 150px">
                                 <Option value="PRIMARY">主表</Option>

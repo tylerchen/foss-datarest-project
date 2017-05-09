@@ -17,17 +17,17 @@
                 {{ model.primaryTable.name }} &nbsp; {{ model.primaryTable.alias }}
             </Form-item>
 
-            <Form-item label="关联表" v-show="model.joinTables.length > 0" v-for="(table, pIndex) in model.joinTables">
+            <Form-item label="关联表" v-show="model.joinTables.length > 0" v-for="(table, pIndex) in model.joinTables" :key="table.pIndex">
                 <Form-item style="float: left">
                     {{ table.type }} &nbsp; {{ table.name }} &nbsp; {{ table.alias }} &nbsp; ON
                 </Form-item>
 
                 <br>
-                <Form-item v-for="(onCondition, index) in model.joinTables[pIndex].onConditions">
+                <Form-item v-for="(onCondition, index) in model.joinTables[pIndex].onConditions" :key="onCondition.index">
                     <Form-item :prop="'joinTables.' + pIndex + '.onConditions.' + index + '.onColumn'"
                                :rules="{required: true, message: '不能为空', trigger: 'blur'}" style="float: left;">
                         <Select v-model="onCondition.onColumn" filterable style="width: 150px">
-                            <Option v-for="item in table.columns" :value="table.alias + '.' + item.name">{{ item.name }}</Option>
+                            <Option v-for="(item, index) in table.columns" :key="item.index" :value="table.alias + '.' + item.name">{{ item.name }}</Option>
                         </Select>
                         &nbsp; =
                     </Form-item>
@@ -35,14 +35,14 @@
                     <Form-item :prop="'joinTables.' + pIndex + '.onConditions.' + index + '.refTable'"
                                :rules="{required: true, message: '不能为空', trigger: 'blur'}" style="float: left;margin-left: 10px">
                         <Select v-model="onCondition.refTable" style="width: 150px" @on-change="loadRefColumns(pIndex, index)">
-                            <Option v-for="t in tables" :value="t.alias">{{ t.alias }}</Option>
+                            <Option v-for="(t, index) in tables" :key="t.index" :value="t.alias">{{ t.alias }}</Option>
                         </Select>
                     </Form-item>
 
                     <Form-item :prop="'joinTables.' + pIndex + '.onConditions.' + index + '.refColumn'"
                                :rules="{required: true, message: '不能为空', trigger: 'blur'}" style="float: left;margin-left: 10px">
                         <Select v-model="onCondition.refColumn" style="width: 150px">
-                            <Option v-for="c in model.joinTables[pIndex].onConditions[index].refColumns" :value="c.name">{{ c.name }}</Option>
+                            <Option v-for="(c, index) in model.joinTables[pIndex].onConditions[index].refColumns" :key="c.index" :value="c.name">{{ c.name }}</Option>
                         </Select>
                     </Form-item>
                     &nbsp;&nbsp;
@@ -73,7 +73,7 @@
                 </Collapse>
 
                 <br>
-                <Form-item v-for="(item, index) in model.selectColumns">
+                <Form-item v-for="(item, index) in model.selectColumns" :key="item.index">
                     <Form-item style="float: left">
                         {{ item.name }}&nbsp;&nbsp;
                     </Form-item>
@@ -106,7 +106,7 @@
                 </Collapse>
 
                 <br>
-                <Form-item v-for="(whereCondition, index) in model.whereConditions">
+                <Form-item v-for="(whereCondition, index) in model.whereConditions" :key="whereCondition.index">
                     <Form-item style="float: left">
                         <Select v-model="whereCondition.andOr" style="width: 90px">
                             <Option value="AND">AND</Option>
