@@ -1,0 +1,51 @@
+<div>
+    <template>
+        <div>
+            <Menu mode="horizontal" active-key="1">
+                <Menu-item name="1">
+                    <router-link to="/index">
+                        <Icon type="ios-paper"></Icon>
+                        首页
+                    </router-link>
+                </Menu-item>
+                <Menu-item name="2">
+                    <router-link to="/data_source_list">
+                        <Icon type="ios-people"></Icon>
+                        数据源管理
+                    </router-link>
+                </Menu-item>
+                <Menu-item name="3">
+                    <router-link to="/query_statement_list">
+                        <Icon type="ios-people"></Icon>
+                        查询模板管理
+                    </router-link>
+                </Menu-item>
+                <Submenu name="4">
+                    <template slot="title">
+                        <Icon type="stats-bars"></Icon>
+                        数据展示组件
+                    </template>
+                    <Menu-group title="静态演示">
+                        <Menu-item name="3-1">
+                            <router-link to="/list_query_view">
+                                列表组件演示
+                            </router-link>
+                        </Menu-item>
+                        <Menu-item name="3-2">
+                            <router-link to="/customize_list_query_view">
+                                自定义列表组件演示
+                            </router-link>
+                        </Menu-item>
+                    </Menu-group>
+                    <Menu-group title="动态演示">
+                        <Menu-item name="3-4">
+                            <router-link to="/list_data_source_and_query_statement">
+                                演示
+                            </router-link>
+                        </Menu-item>
+                    </Menu-group>
+                </Submenu>
+            </Menu>
+        </div>
+    </template>
+</div>
