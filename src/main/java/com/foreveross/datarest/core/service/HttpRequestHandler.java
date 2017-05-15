@@ -14,7 +14,6 @@ import java.io.RandomAccessFile;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-
 public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequest> { //1
     private final String wsUri;
     private static final File INDEX;

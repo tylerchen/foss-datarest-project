@@ -20,7 +20,7 @@ public class HttpStaticHandler extends SimpleChannelInboundHandler<FullHttpReque
     public void channelRead0(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
 
         String uri = request.uri();
-        if (!uri.contains("dist")) {
+        if (!uri.contains("src")) {
             ctx.fireChannelRead(request.retain());
         } else {
 
@@ -31,6 +31,11 @@ public class HttpStaticHandler extends SimpleChannelInboundHandler<FullHttpReque
             URL location = HttpStaticHandler.class.getProtectionDomain().getCodeSource().getLocation();
             String path = location.toURI() + uri.substring(1);
             path = !path.contains("file:") ? path : path.substring(5);
+
+            if(path.contains("?")) {
+                path = path.substring(0, path.indexOf("?"));
+            }
+
             File staticFile = new File(path);
 
             HttpResponse response = new DefaultHttpResponse(request.protocolVersion(), HttpResponseStatus.OK);
