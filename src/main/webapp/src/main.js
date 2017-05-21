@@ -36,7 +36,7 @@ var requireConfig = {
         routes: "routes",
         globalConst: "config/const",
         views: "views",
-
+        apis: "apis",
         app: "app",
         remove: "remove",
         stepState: "views/queryStatement/stepState",
@@ -82,8 +82,8 @@ requirejs.config(requireConfig);
 /**
  * loading the app.js file undering the html page directory.
  */
-require([ 'vue', 'vuerouter', 'iview', 'vuex', 'axios', 'routes', 'app' ],
-    function(Vue, VueRouter, iView, Vuex, axios, Routes) {
+require([ 'vue', 'vuerouter', 'iview', 'vuex', 'routes', 'app' ],
+    function(Vue, VueRouter, iView, Vuex, Routes) {
     //Vue.config.debug = true
     //Vue.config.devtools = true
     /**@see http://www.tuicool.com/articles/jIRrAfI**/
@@ -94,7 +94,7 @@ require([ 'vue', 'vuerouter', 'iview', 'vuex', 'axios', 'routes', 'app' ],
     //Vue.http.options.emulateJSON = true
 
     // 将axios插件对象附加到vue的原型上
-    Vue.prototype.$http = axios
+    // Vue.prototype.$http = axios
 
     // 配置自定义过滤器E
     Vue.filter('localDateString', function(value) {

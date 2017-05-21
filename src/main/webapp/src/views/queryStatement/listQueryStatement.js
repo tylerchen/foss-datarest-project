@@ -1,4 +1,4 @@
-define([ 'vue', 'html!views/queryStatement/listQueryStatement.html', 'globalConst', 'remove' ], function(Vue, html, globalConst) {
+define([ 'vue', 'html!views/queryStatement/listQueryStatement.html', 'globalConst', 'apis/queryStatementService', 'remove' ], function(Vue, html, globalConst, queryStatementService) {
 
     const MODULE = globalConst.QUERY_STATEMENT
     const PAGE = globalConst.PAGE
@@ -77,15 +77,16 @@ define([ 'vue', 'html!views/queryStatement/listQueryStatement.html', 'globalCons
                 this.getDataPage()
             },
             getDataPage () {
-                this.$http.get(MODULE.URL.LIST + "/currentPage=" + this.currentPage + "/pageSize=" + this.pageSize)
-                    .then((response) => {
-                        var resultData = response.data
-                        this.$set(this.$data, 'rows', resultData.rows)
-                        this.$set(this.$data, 'totalCount', resultData.totalCount)
-                    })
-                    .catch((error) => {
-                        console.log(error)
-                    })
+
+                queryStatementService.findQueryStatements(this.currentPage, this.pageSize).then((response) => {
+
+                    var resultData = response.data
+                    this.$set(this.$data, 'rows', resultData.rows)
+                    this.$set(this.$data, 'totalCount', resultData.totalCount)
+
+                }).catch((error) => {
+                    console.log(error)
+                })
             },
             checkSelectedOnlyOne (selectedIds) {
                 if(selectedIds.length != 1) {

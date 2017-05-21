@@ -1,7 +1,6 @@
-define([ 'vue', 'html!views/queryView/listDataSourceAndQueryStatement.html', 'globalConst', 'listQueryViewModal' ],
-    function(Vue, html, globalConst) {
-        const DATA_SOURCE = globalConst.DATA_SOURCE
-        const QUERY_STATEMENT = globalConst.QUERY_STATEMENT
+define([ 'vue', 'html!views/queryView/listDataSourceAndQueryStatement.html', 'globalConst', 'apis/dataSourceService', 'apis/queryStatementService', 'listQueryViewModal' ],
+    function(Vue, html, globalConst, dataSourceService, queryStatementService) {
+
         const PAGE = globalConst.PAGE
 
         return {
@@ -61,15 +60,17 @@ define([ 'vue', 'html!views/queryView/listDataSourceAndQueryStatement.html', 'gl
                     this.dataSourceSelectedObj = currentRow
                 },
                 getDataSourcePage () {
-                    this.$http.get(DATA_SOURCE.URL.LIST + "/currentPage=" + this.dataSourceCurrentPage + "/pageSize=" + this.dataSourcePageSize)
-                        .then((response) => {
-                            var resultData = response.data
-                            this.$set(this.$data, 'dataSourceRows', resultData.rows)
-                            this.$set(this.$data, 'dataSourceTotalCount', resultData.totalCount)
-                        })
-                        .catch((error) => {
-                            console.log(error)
-                        })
+
+                    dataSourceService.findDataSources(this.dataSourceCurrentPage, this.dataSourcePageSize).then((response) => {
+
+                        var resultData = response.data
+                        this.$set(this.$data, 'dataSourceRows', resultData.rows)
+                        this.$set(this.$data, 'dataSourceTotalCount', resultData.totalCount)
+
+                    }).catch((error) => {
+                        console.log(error)
+                    })
+
                 },
                 changeQueryStatementPage (current) {
                     this.queryStatementSelectedObj = ''
@@ -85,15 +86,17 @@ define([ 'vue', 'html!views/queryView/listDataSourceAndQueryStatement.html', 'gl
                     this.queryStatementSelectedObj = currentRow
                 },
                 getQueryStatementPage () {
-                    this.$http.get(QUERY_STATEMENT.URL.LIST + "/currentPage=" + this.queryStatementCurrentPage + "/pageSize=" + this.queryStatementPageSize)
-                        .then((response) => {
-                            var resultData = response.data
-                            this.$set(this.$data, 'queryStatementRows', resultData.rows)
-                            this.$set(this.$data, 'queryStatementTotalCount', resultData.totalCount)
-                        })
-                        .catch(function(response) {
-                            console.log(response)
-                        })
+
+                    queryStatementService.findQueryStatements(this.queryStatementCurrentPage, this.queryStatementPageSize).then((response) => {
+
+                        var resultData = response.data
+                        this.$set(this.$data, 'queryStatementRows', resultData.rows)
+                        this.$set(this.$data, 'queryStatementTotalCount', resultData.totalCount)
+
+                    }).catch((error) => {
+                        console.log(error)
+                    })
+
                 },
                 previewListQueryView () {
                     this.$refs.listqueryviewchild.show(true, this.dataSourceSelectedObj.name, this.queryStatementSelectedObj.name)

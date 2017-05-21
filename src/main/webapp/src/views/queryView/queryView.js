@@ -1,5 +1,5 @@
-define([ 'vue', 'html!views/queryView/queryView.html', 'underscore' ],
-    function(Vue, html) {
+define([ 'vue', 'html!views/queryView/queryView.html', 'apis/queryViewService', 'apis/queryStatementService', 'underscore' ],
+    function(Vue, html, queryViewService, queryStatementService) {
 
         var queryView = Vue.extend({
             template : html,
@@ -38,13 +38,13 @@ define([ 'vue', 'html!views/queryView/queryView.html', 'underscore' ],
                     this.getDataPage()
                 },
                 getDataPage () {
-                    this.$http.post(
-                        "/default/query_page/" + this.dataSourceName + "/" + this.queryStatementName,
-                        "conditions=" + encodeURIComponent(JSON.stringify(this.conditions))
-                    ).then((response) => {
+                    queryViewService.queryPage(this.dataSourceName, this.queryStatementName,
+                        encodeURIComponent(JSON.stringify(this.conditions))).then((response) => {
+
                         var resultData = response.data
                         this.$set(this.$data, 'rows', resultData.rows)
                         this.$set(this.$data, 'totalCount', resultData.totalCount)
+
                     }).catch((error) => {
                         console.log(error)
                     })
@@ -66,11 +66,13 @@ define([ 'vue', 'html!views/queryView/queryView.html', 'underscore' ],
                     this.getDataPage()
                 },
                 init (dataSourceName, queryStatementName) {
+
                     this.dataSourceName = dataSourceName
                     this.queryStatementName = queryStatementName
-                    this.$http.get("/default/querystatement_get_name/" + this.queryStatementName)
-                        .then((response) => {
-                            var resultData = response.data
+
+                    queryStatementService.getQueryStatementByName(this.queryStatementName).then((response) => {
+
+                        var resultData = response.data
                             var selectBody = resultData.selectBody
                             var whereBody = resultData.whereBody
 

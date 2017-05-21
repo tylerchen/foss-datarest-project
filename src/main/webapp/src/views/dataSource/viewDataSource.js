@@ -1,5 +1,5 @@
-define([ 'vue', 'html!views/dataSource/viewDataSource.html', 'globalConst' ],
-    function(Vue, html, globalConst) {
+define([ 'vue', 'html!views/dataSource/viewDataSource.html', 'globalConst', 'apis/dataSourceService' ],
+    function(Vue, html, globalConst, dataSourceService) {
 
     const MODULE = globalConst.DATA_SOURCE
 
@@ -16,17 +16,14 @@ define([ 'vue', 'html!views/dataSource/viewDataSource.html', 'globalConst' ],
         methods: {
             getModelData () {
 
-                var id = this.$route.params.id
+                dataSourceService.getDataSource(this.$route.params.id).then((response) => {
 
-                var url = MODULE.URL.GET + "/" + id
-                this.$http.get(url)
-                    .then((response) => {
-                        var resultData = response.data
-                        this.$set(this.$data, 'model', resultData)
-                    })
-                    .catch((error) => {
-                        console.log(error)
-                    })
+                    var resultData = response.data
+                    this.$set(this.$data, 'model', resultData)
+
+                }).catch((error) => {
+                    console.log(error)
+                })
             },
             goback () {
                 this.$router.push(MODULE.ROUTER.LIST)

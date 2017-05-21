@@ -1,5 +1,5 @@
-define([ 'vue', 'html!views/dataSource/editDataSource.html', 'globalConst' ],
-    function(Vue, html, globalConst) {
+define([ 'vue', 'html!views/dataSource/editDataSource.html', 'globalConst', 'apis/dataSourceService' ],
+    function(Vue, html, globalConst, dataSourceService) {
 
     const MODULE = globalConst.DATA_SOURCE
 
@@ -38,29 +38,30 @@ define([ 'vue', 'html!views/dataSource/editDataSource.html', 'globalConst' ],
         },
         methods: {
             getModelData () {
-                var url = MODULE.URL.GET + "/" + this.$route.params.id
-                this.$http.get(url)
-                    .then((response) => {
-                        var resultData = response.data
-                        this.$set(this.$data, 'model', resultData)
-                    })
-                    .catch(function (response) {
-                        console.log(response)
-                    });
+                dataSourceService.getDataSource(this.$route.params.id).then((response) => {
+
+                    var resultData = response.data
+                    this.$set(this.$data, 'model', resultData)
+
+                }).catch((error) => {
+                    console.log(error)
+                })
             },
             update (name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                        var params = "datasource=" + encodeURIComponent(JSON.stringify(this.model))
-                        this.$http.post(MODULE.URL.UPDATE, params)
-                            .then((response) => {
-                                this.goback()
-                                this.$Message.success('修改成功!')
-                            })
-                            .catch((error) => {
-                                console.log(error)
-                                this.$Message.error('修改失败!')
-                            })
+
+                        var params = encodeURIComponent(JSON.stringify(this.model))
+
+                        dataSourceService.updateDataSource(params).then((response) => {
+
+                            this.goback()
+                            this.$Message.success('修改成功!')
+
+                        }).catch((error) => {
+                            console.log(error)
+                            this.$Message.error('修改失败!')
+                        })
                     } else {
                         this.$Message.error('表单验证失败!')
                     }
