@@ -1,4 +1,5 @@
-define([ 'vue', 'html!views/dataSource/listDataSource.html', 'globalConst', 'remove' ], function(Vue, html, globalConst) {
+define([ 'vue', 'html!views/dataSource/listDataSource.html', 'globalConst', 'apis/dataSourceService', 'remove' ],
+    function(Vue, html, globalConst, dataSourceService) {
 
     const MODULE = globalConst.DATA_SOURCE
     const PAGE = globalConst.PAGE
@@ -88,18 +89,16 @@ define([ 'vue', 'html!views/dataSource/listDataSource.html', 'globalConst', 'rem
                 this.getDataPage()
             },
             getDataPage () {
-                var url = MODULE.URL.LIST + "/currentPage=" + this.currentPage + "/pageSize=" + this.pageSize
-                this.$http.get(url)
-                    .then((response) => {
 
-                        var resultData = response.data
-                        this.$set(this.$data, 'rows', resultData.rows)
-                        this.$set(this.$data, 'totalCount', resultData.totalCount)
+                dataSourceService.findDataSources(this.currentPage, this.pageSize).then((response) => {
 
-                    })
-                    .catch((error) => {
-                        console.log(error)
-                    })
+                    var resultData = response.data
+                    this.$set(this.$data, 'rows', resultData.rows)
+                    this.$set(this.$data, 'totalCount', resultData.totalCount)
+
+                }).catch((error) => {
+                    console.log(error)
+                })
             },
             checkSelectedOnlyOne (selectedIds) {
                 if(selectedIds.length != 1) {

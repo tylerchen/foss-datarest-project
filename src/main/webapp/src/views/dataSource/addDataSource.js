@@ -1,5 +1,5 @@
-define([ 'vue', 'html!views/dataSource/addDataSource.html', 'globalConst' ],
-    function(Vue, html, globalConst) {
+define([ 'vue', 'html!views/dataSource/addDataSource.html', 'globalConst', 'apis/dataSourceService' ],
+    function(Vue, html, globalConst, dataSourceService) {
 
     const MODULE = globalConst.DATA_SOURCE
 
@@ -40,16 +40,18 @@ define([ 'vue', 'html!views/dataSource/addDataSource.html', 'globalConst' ],
             add (name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                        var params = "datasource=" + encodeURIComponent(JSON.stringify(this.model))
-                        this.$http.post(MODULE.URL.ADD, params)
-                            .then((response) => {
-                                this.goback()
-                                this.$Message.success('添加成功!')
-                            })
-                            .catch((error) => {
-                                this.$Message.error('添加失败!')
-                                console.log(error)
-                            });
+
+                        var params = encodeURIComponent(JSON.stringify(this.model))
+
+                        dataSourceService.addDataSource(params).then((response) => {
+
+                            this.goback()
+                            this.$Message.success('添加成功!')
+
+                        }).catch((error) => {
+                            console.log(error)
+                            this.$Message.error('添加失败!')
+                        })
                     } else {
                         this.$Message.error('表单验证失败!')
                     }

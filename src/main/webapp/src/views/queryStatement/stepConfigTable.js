@@ -1,9 +1,7 @@
-define([ 'vue', 'html!views/queryStatement/stepConfigTable.html', 'globalConst', 'stepState' ],
-
-    function(Vue, html, globalConst) {
+define([ 'vue', 'html!views/queryStatement/stepConfigTable.html', 'globalConst', 'apis/queryStatementService', 'stepState' ],
+    function(Vue, html, globalConst, queryStatementService) {
 
         const MODULE = globalConst.QUERY_STATEMENT
-        const TABLE = globalConst.TABLE
         const STORE = globalConst.QUERY_STATEMENT_CREATE_STORE
 
         return {
@@ -78,32 +76,32 @@ define([ 'vue', 'html!views/queryStatement/stepConfigTable.html', 'globalConst',
                     return item.label;
                 },
                 loadReadyTables () {
-                    var url = TABLE.URL.LIST + "/" + STORE.dataSourceId
-                    this.$http.get(url)
-                        .then((response) => {
-                            this.tablesWithColumns = response.data
-                            for(var tableKey in this.tablesWithColumns) {
-                                this.readyTables.push({
-                                    key: tableKey,
-                                    label: '表名: ' + tableKey,
-                                    disabled: false
-                                });
-                            }
 
-                            this.model.tables = STORE.tables
-                            this.selectedTables = []
-                            if(this.model.tables.length > 0) {
-                                for(var i in this.model.tables) {
-                                    var table = this.model.tables[i]
-                                    if(this.selectedTables.indexOf(table.name) == -1) {
-                                        this.selectedTables.push(table.name)
-                                    }
+                    queryStatementService.findTables(STORE.dataSourceId).then((response) => {
+
+                        this.tablesWithColumns = response.data
+                        for(var tableKey in this.tablesWithColumns) {
+                            this.readyTables.push({
+                                key: tableKey,
+                                label: '表名: ' + tableKey,
+                                disabled: false
+                            });
+                        }
+
+                        this.model.tables = STORE.tables
+                        this.selectedTables = []
+                        if(this.model.tables.length > 0) {
+                            for(var i in this.model.tables) {
+                                var table = this.model.tables[i]
+                                if(this.selectedTables.indexOf(table.name) == -1) {
+                                    this.selectedTables.push(table.name)
                                 }
                             }
-                        })
-                        .catch(function(error) {
-                            console.log(error)
-                        })
+                        }
+
+                    }).catch(function(error) {
+                        console.log(error)
+                    })
                 },
                 changePanel (object) {
                     if(object.length == 0) {

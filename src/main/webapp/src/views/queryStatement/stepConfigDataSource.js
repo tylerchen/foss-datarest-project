@@ -1,6 +1,6 @@
-define([ 'vue', 'html!views/queryStatement/stepConfigDataSource.html', 'globalConst', 'stepState' ],
+define([ 'vue', 'html!views/queryStatement/stepConfigDataSource.html', 'globalConst', 'apis/dataSourceService', 'stepState' ],
 
-    function(Vue, html, globalConst) {
+    function(Vue, html, globalConst, dataSourceService) {
 
         const MODULE = globalConst.QUERY_STATEMENT
         const PAGE = globalConst.PAGE
@@ -85,22 +85,24 @@ define([ 'vue', 'html!views/queryStatement/stepConfigDataSource.html', 'globalCo
                     this.getDataPage()
                 },
                 getDataPage () {
-                    this.$http.get(DATA_SOURCE.URL.LIST + "/currentPage=" + this.currentPage + "/pageSize=" + this.pageSize)
-                        .then((response) => {
-                            this.selectedId = ""
-                            var resultData = response.data.rows
-                            for(var i in resultData) {
-                                if(resultData[i].id == STORE.dataSourceId) {
-                                    resultData[i]._highlight = true
-                                    this.selectedId = resultData[i].id
-                                }
+
+                    dataSourceService.findDataSources(this.currentPage, this.pageSize).then((response) => {
+
+                        this.selectedId = ""
+                        var resultData = response.data.rows
+                        for(var i in resultData) {
+                            if(resultData[i].id == STORE.dataSourceId) {
+                                resultData[i]._highlight = true
+                                this.selectedId = resultData[i].id
                             }
-                            this.$set(this.$data, 'rows', resultData)
-                            this.$set(this.$data, 'totalCount', resultData.totalCount)
-                        })
-                        .catch(function(response) {
-                            console.log(response)
-                        })
+                        }
+                        this.$set(this.$data, 'rows', resultData)
+                        this.$set(this.$data, 'totalCount', resultData.totalCount)
+
+                    }).catch((error) => {
+                        console.log(error)
+                    })
+
                 },
                 changeSelectedRow (currentRow) {
                     this.selectedId = currentRow.id

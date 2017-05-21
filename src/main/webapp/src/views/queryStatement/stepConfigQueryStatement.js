@@ -1,6 +1,6 @@
-define([ 'vue', 'html!views/queryStatement/stepConfigQueryStatement.html', 'globalConst', 'stepState', 'stepPreview', 'underscore' ],
+define([ 'vue', 'html!views/queryStatement/stepConfigQueryStatement.html', 'globalConst', 'apis/queryStatementService', 'stepState', 'stepPreview', 'underscore' ],
 
-    function(Vue, html, globalConst) {
+    function(Vue, html, globalConst, queryStatementService) {
 
         const MODULE = globalConst.QUERY_STATEMENT
         const SEPARATOR = globalConst.SEPARATOR
@@ -89,16 +89,16 @@ define([ 'vue', 'html!views/queryStatement/stepConfigQueryStatement.html', 'glob
 
                             this.transformSaveModel()
 
-                            this.$http.post(MODULE.URL.ADD, "queryStatement=" + encodeURIComponent(JSON.stringify(this.saveModel)))
-                                .then((response) => {
-                                    STORE.clear()
-                                    this.$router.push(MODULE.ROUTER.LIST)
-                                    this.$Message.success('添加成功!')
-                                })
-                                .catch((error) => {
-                                    console.log(error)
-                                    this.$Message.error('添加失败!')
-                                })
+                            queryStatementService.addQueryStatement(encodeURIComponent(JSON.stringify(this.saveModel))).then((response) => {
+
+                                STORE.clear()
+                                this.$router.push(MODULE.ROUTER.LIST)
+                                this.$Message.success('添加成功!')
+
+                            }).catch((error) => {
+                                console.log(error)
+                                this.$Message.error('添加失败!')
+                            })
                         }
                     })
                 },
